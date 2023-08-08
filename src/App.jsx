@@ -11,6 +11,7 @@ import RootLayout from "./Layout/RootLayout";
 // Pages
 import Dashboard from "./Pages/Dashboard";
 import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 
 const App = () => {
   const router = createBrowserRouter(
@@ -18,6 +19,7 @@ const App = () => {
       <Route path="/" element={<RootLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
       </Route>
     )
   );
