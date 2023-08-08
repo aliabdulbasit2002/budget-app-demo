@@ -1,14 +1,28 @@
-import { ChakraProvider } from "@chakra-ui/react"
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom/dist";
 
+// Layout
+import RootLayout from "./Layout/RootLayout";
 
-function App() {
-  
+// Pages
+import Dashboard from "./Pages/Dashboard";
+import Login from "./Pages/Login";
 
-  return (
-    <ChakraProvider>
-      {/* routes go here */}
-    </ChakraProvider>
-  )
-}
+const App = () => {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<RootLayout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="login" element={<Login />} />
+      </Route>
+    )
+  );
 
-export default App
+  return <RouterProvider router={router} />;
+};
+
+export default App;
