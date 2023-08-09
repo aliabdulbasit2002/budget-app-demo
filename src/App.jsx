@@ -1,14 +1,53 @@
-import { ChakraProvider } from "@chakra-ui/react"
+import {
+  Navigate,
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom/dist";
+import { useAuth } from "./Config/firebase";
 
+// Layout
+import RootLayout from "./Layout/RootLayout";
 
-function App() {
-  
+// Pages
+import Dashboard from "./Pages/Dashboard";
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 
-  return (
-    <ChakraProvider>
-      {/* routes go here */}
-    </ChakraProvider>
-  )
-}
+const App = () => {
+  // get Current user
+  const currentUser = useAuth();
+  // console.log(currentUser);
 
-export default App
+  // Protected Routes
+  const RequiredAuth = ({ children }) => {
+    return currentUser ? children : <Navigate to="/login" />;
+  };
+  const RedirectIfLoggedIn = ({ children }) => {
+    return currentUser ? <Navigate to="/" /> : children;
+  };
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<RootLayout />}>
+        <Route
+          index
+          element={
+            <RequiredAuth>
+              <Dashboard />
+            </RequiredAuth>
+          }
+        />
+
+        <Route path="login" element={<Login />} />
+
+        <Route path="register" element={<Register />} />
+      </Route>
+    )
+  );
+
+  return <RouterProvider router={router} />;
+};
+
+export default App;
