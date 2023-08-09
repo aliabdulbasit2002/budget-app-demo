@@ -7,8 +7,8 @@ const RootLayout = () => {
   return (
     <Container maxW="container" px={0}>
       {/* <Navbar /> */}
-      {/* <Login /> */}
-      <Register />
+      <Login />
+      {/* <Register /> */}
     </Container>
   );
 };
