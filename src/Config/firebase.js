@@ -6,15 +6,8 @@ import {
   onAuthStateChanged,
   signOut,
   signInWithEmailAndPassword,
-  updateProfile,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
 import { useEffect, useState } from "react";
 
 // Your web app's Firebase configuration
@@ -31,6 +24,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 // create New user
 export const signUp = (email, password) =>
@@ -49,8 +43,10 @@ export const logout = () => {
 export const useAuth = () => {
   const [currentUser, setCurrentUser] = useState(null);
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => setCurrentUser(user));
-    return unsub;
+    const unsubscribe = onAuthStateChanged(auth, (user) =>
+      setCurrentUser(user)
+    );
+    return unsubscribe;
   }, []);
 
   return currentUser;

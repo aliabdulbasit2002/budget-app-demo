@@ -13,12 +13,63 @@ import {
   Input,
   Text,
   Link,
+  useToast,
 } from "@chakra-ui/react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { db, signUp } from "../Config/firebase";
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { FcGoogle } from "react-icons/fc";
-import { Link as RouterLink } from "react-router-dom";
 import registerImg from "../images/register.jpg";
 
 const Register = () => {
+  const [registerUser, setRegisterUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const { firstName, lastName, email, password } = registerUser;
+  const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterUser((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // console.log(registerUser);
+    setIsLoading(true);
+    try {
+      const res = await signUp(email, password);
+      setDoc(doc(db, "users", res.user.uid), {
+        ...registerUser,
+        timeStamp: serverTimestamp(),
+      });
+      setRegisterUser({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+      });
+      toast({
+        description: "Successfully Registered",
+        duration: 3000,
+        status: "success",
+        colorScheme: "green",
+      });
+    } catch (error) {
+      console.log(error.message);
+      setError(true);
+    }
+    setIsLoading(false);
+    navigate({ pathname: "/" });
+  };
+
   return (
     <Center minH="100vh" bg="green.400">
       <Flex
@@ -35,26 +86,58 @@ const Register = () => {
         />
         <Box w={{ base: "100%", md: "50%" }} bg="white" p={8}>
           <Heading textAlign="center">Register</Heading>
-          <form>
+          {error && (
+            <Text color="red.400" fontWeight="semibold">
+              An Error has Occured
+            </Text>
+          )}
+          <form onSubmit={handleSubmit}>
             <HStack mt={4}>
               <FormControl>
                 <FormLabel>First Name</FormLabel>
-                <Input type="text" variant="filled" />
+                <Input
+                  type="text"
+                  variant="filled"
+                  name="firstName"
+                  onChange={handleChange}
+                />
               </FormControl>
               <FormControl>
                 <FormLabel>Last Name</FormLabel>
-                <Input type="text" variant="filled" />
+                <Input
+                  type="text"
+                  variant="filled"
+                  name="lastName"
+                  onChange={handleChange}
+                />
               </FormControl>
             </HStack>
             <FormControl mt={3}>
               <FormLabel>Email</FormLabel>
-              <Input type="email" variant="filled" />
+              <Input
+                type="email"
+                variant="filled"
+                name="email"
+                onChange={handleChange}
+              />
             </FormControl>
             <FormControl mt={3}>
               <FormLabel>Password</FormLabel>
-              <Input type="password" variant="filled" />
+              <Input
+                type="password"
+                variant="filled"
+                name="password"
+                onChange={handleChange}
+              />
             </FormControl>
-            <Button colorScheme="green" mt={6} w="full">
+            <Button
+              type="submit"
+              colorScheme="green"
+              mt={6}
+              w="full"
+              isLoading={isLoading}
+              isDisabled={!firstName || !lastName || !email || !password}
+            >
               Register
             </Button>
           </form>
