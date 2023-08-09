@@ -19,12 +19,12 @@ import { useEffect, useState } from "react";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAu_dtby4LaXp62Hu_TBhZhE76al9U3gQ8",
-  authDomain: "expense-budget-app-6a757.firebaseapp.com",
-  projectId: "expense-budget-app-6a757",
-  storageBucket: "expense-budget-app-6a757.appspot.com",
-  messagingSenderId: "967859375555",
-  appId: "1:967859375555:web:da69ba3190b1d2b2e10176",
+  apiKey: import.meta.env.VITE_APP_API_KEY,
+  authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_APP_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_APP_MESSAGING,
+  appId: import.meta.env.VITE_APP_APP_ID,
 };
 
 // Initialize Firebase
