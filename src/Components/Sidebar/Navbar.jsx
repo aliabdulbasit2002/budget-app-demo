@@ -61,7 +61,7 @@ const Navbar = () => {
     <>
       <Flex
         direction="column"
-        w="15vw"
+        // w="15vw"
         h="100vh"
         bg="green.700"
         color="whiteAlpha.900"
