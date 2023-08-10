@@ -1,15 +1,18 @@
 import { Container, Grid, GridItem } from "@chakra-ui/react";
-import Navbar from "../Components/Sidebar/Navbar";
-import Login from "../Pages/Login";
-import Register from "../Pages/Register";
-import Dashboard from "../pages/dashboard/Dashboard";
-import ExpenseBreakdown from "../Components/ExpenseBreakdown";
 import { Outlet } from "react-router-dom";
+import Navbar from "../Components/Sidebar/Navbar";
 
 const RootLayout = () => {
   return (
     <Container maxW="container" px={0} minH="100vh">
-      <Outlet />
+      <Grid templateColumns="repeat(12,1fr)">
+        <GridItem colSpan={2}>
+          <Navbar />
+        </GridItem>
+        <GridItem colSpan={10}>
+          <Outlet />
+        </GridItem>
+      </Grid>
     </Container>
   );
 };
