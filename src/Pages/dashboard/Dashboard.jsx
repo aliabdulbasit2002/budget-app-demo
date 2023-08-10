@@ -1,4 +1,4 @@
-import { useToast } from "@chakra-ui/react";
+import { Grid, GridItem, useToast } from "@chakra-ui/react";
 import { logout } from "../../Config/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -32,9 +32,11 @@ const Dashboard = () => {
   };
 
   return (
-    <>
-      <Navbar handleLogout={handleLogout} isLoading={isLoading} />
-    </>
+    <Grid templateColumns="repeat(12,1fr)">
+      <GridItem>
+        <Navbar handleLogout={handleLogout} isLoading={isLoading} />
+      </GridItem>
+    </Grid>
   );
 };
 
