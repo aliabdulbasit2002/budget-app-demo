@@ -12,7 +12,8 @@ import { useAuth } from "./Config/firebase";
 import RootLayout from "./Layout/RootLayout";
 
 // Pages
-import Dashboard from "./pages/dashboard/Dashboard";
+
+import Dashboard from "./Pages/dashboard/Dashboard";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Expense from "./pages/dashboard/Expense";
@@ -42,6 +43,8 @@ const App = () => {
             </RequiredAuth>
           }
         />
+        <Route path="expenses" element={<Expense />} />
+        <Route path="budget" element={<Budget />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
       </Route>
