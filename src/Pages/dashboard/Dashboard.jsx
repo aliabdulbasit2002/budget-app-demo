@@ -1,7 +1,8 @@
-import { Button, useToast } from "@chakra-ui/react";
-import { logout } from "../Config/firebase";
+import { useToast } from "@chakra-ui/react";
+import { logout } from "../../Config/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../../Components/Sidebar/Navbar";
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -31,11 +32,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <Button onClick={handleLogout} colorScheme="green" isLoading={isLoading}>
-        Logout
-      </Button>
-    </div>
+    <>
+      <Navbar handleLogout={handleLogout} isLoading={isLoading} />
+    </>
   );
 };
 

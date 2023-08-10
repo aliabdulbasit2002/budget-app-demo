@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Navigate,
   Route,
@@ -11,9 +12,11 @@ import { useAuth } from "./Config/firebase";
 import RootLayout from "./Layout/RootLayout";
 
 // Pages
-import Dashboard from "./Pages/Dashboard";
+import Dashboard from "./pages/dashboard/Dashboard";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
+import Expense from "./pages/dashboard/Expense";
+import Budget from "./pages/dashboard/Budget";
 
 const App = () => {
   // get Current user
@@ -39,9 +42,7 @@ const App = () => {
             </RequiredAuth>
           }
         />
-
         <Route path="login" element={<Login />} />
-
         <Route path="register" element={<Register />} />
       </Route>
     )
