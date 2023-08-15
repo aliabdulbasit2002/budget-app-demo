@@ -6,7 +6,7 @@ const initialState = {
       id: nanoid(),
       name: "Groceries for June",
       amount: 200,
-      finance: 180,
+      finance: 0,
       startDate: "2/06/2023",
       endDate: "25/06/2023",
       description: "Toiletries, Dog food, Veges"
@@ -15,7 +15,7 @@ const initialState = {
       id: nanoid(),
       name: "Budget for laundry",
       amount: 150,
-      finance: 140,
+      finance: 0,
       startDate: "2/06/2023",
       endDate: "25/06/2023",
       description: "Toiletries, Dog food, Veges"
@@ -47,14 +47,10 @@ const appSlices = createSlice({
     },
     addFunction: (state, action) => {
       state.budget = [...state.budget, action.payload];
-      state.expense = [...state.expense, action.payload];
     },
     updateFunction: (state, action) => {
       state.budget = state.budget.map((budget) =>
         budget.id === action.payload.id ? action.payload : budget
-      );
-      state.expense = state.expense.map((expense) =>
-        expense.id === action.payload.id ? action.payload : expense
       );
     },
     deleteFunction: (state, action) => {
