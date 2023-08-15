@@ -52,7 +52,7 @@ const RootLayout = () => {
         <GridItem colSpan={2}>
           <Navbar />
         </GridItem>
-        <GridItem colSpan={10} p={10}>
+        <GridItem colSpan={10} p={6} bg="gray.100">
           <Flex align="center">
             <Text fontSize="2xl" fontWeight="bold">
               Dashboard
