@@ -41,7 +41,7 @@ const ExpenseCard = () => {
               maxW="sm"
               borderTop="5px solid crimson"
               cursor={isCardEnabled ? "default" : "pointer"}
-              opacity={isCardEnabled ? 1 : 0.5}
+              filter={isCardEnabled ? "grayscale(0%)" : "grayscale(80%)"}
               onClick={() => handleCardClick(budget.id)}
             >
               <CardBody>
@@ -53,7 +53,7 @@ const ExpenseCard = () => {
                   rounded={5}
                   colorScheme="red"
                   hasStripe
-                  my={2}
+                  my={4}
                   isAnimated
                   value={(budget.finance / budget.amount) * 100}
                 />

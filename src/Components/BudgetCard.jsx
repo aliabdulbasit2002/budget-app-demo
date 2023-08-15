@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Button,
   Card,
@@ -9,17 +10,16 @@ import {
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-const BudgetCard = () => {
+const BudgetCard = ({onEditBudget}) => {
   const state = useSelector((state) => {
     return state.appReducer;
   });
 
-  //   const dispatch = useDispatch();
   return (
     <>
       <Flex mt={10} gap={5}>
         {state.budget.map((budget) => {
-          const isGreen = budget.finance < budget.amount;
+          const isGreen = budget.finance <= budget.amount;
           return (
             <Card
               key={budget.id}
@@ -37,7 +37,7 @@ const BudgetCard = () => {
                   rounded={5}
                   colorScheme={isGreen ? "whatsapp" : "red"}
                   hasStripe
-                  my={2}
+                  my={4}
                   isAnimated
                   value={(budget.finance / budget.amount) * 100}
                 />
@@ -51,6 +51,7 @@ const BudgetCard = () => {
                     variant="outline"
                     colorScheme="whatsapp"
                     py={2}
+                    onClick={()=> onEditBudget(budget)}
                   >
                     View Details
                   </Button>
