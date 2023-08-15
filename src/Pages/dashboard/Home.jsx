@@ -1,8 +1,9 @@
 import { Grid, GridItem, HStack } from "@chakra-ui/react";
-import ExpenceBreakdown from "../../Components/Data and chart/ExpenceBreakdown";
+
 import TotalExpence from "../../Components/Data and chart/TotalExpence";
 import TotalBudget from "../../Components/Data and chart/TotalBudget";
 import DataChart from "../../Components/Data and chart/DataChart";
+import ExpenseBreakdown from "../../Components/ExpenseBreakdown";
 
 const Home = () => {
   return (
@@ -15,7 +16,7 @@ const Home = () => {
         <DataChart />
       </GridItem>
       <GridItem colSpan={4}>
-        <ExpenceBreakdown />
+        <ExpenseBreakdown />
       </GridItem>
     </Grid>
   );
