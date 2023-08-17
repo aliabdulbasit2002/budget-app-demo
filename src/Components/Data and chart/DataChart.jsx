@@ -1,3 +1,4 @@
+import { Stat } from "@chakra-ui/react";
 import Chart from "react-google-charts";
 
 export const data = [
@@ -21,13 +22,15 @@ export const options = {
 
 const DataChart = () => {
   return (
-    <Chart
-      chartType="ColumnChart"
-      width="100%"
-      height="450px"
-      data={data}
-      options={options}
-    />
+    <Stat rounded="xl" overflow="hidden">
+      <Chart
+        chartType="ColumnChart"
+        width="100%"
+        height="450px"
+        data={data}
+        options={options}
+      />
+    </Stat>
   );
 };
 

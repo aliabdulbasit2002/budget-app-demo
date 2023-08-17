@@ -9,7 +9,7 @@ import {
 
 const TotalBudget = () => {
   return (
-    <Stat shadow="sm" p={5} bg="white">
+    <Stat shadow="sm" p={5} bg="white" rounded="xl">
       <StatLabel as={Text} fontWeight="bold">
         Total Budget
       </StatLabel>

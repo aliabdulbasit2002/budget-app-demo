@@ -43,14 +43,14 @@ const BudgetCard = ({onEditBudget}) => {
                 />
                 <Flex align="center" mt={4} gap={4}>
                   <Text fontSize="xs" fontStyle="italic" color="gray.600">
-                    {budget.description}...
+                    {budget.description.substring(0, 25)}...
                   </Text>
                   <Button
                     ms="auto"
                     size="xs"
                     variant="outline"
                     colorScheme="whatsapp"
-                    py={2}
+                    py={3}
                     onClick={()=> onEditBudget(budget)}
                   >
                     View Details

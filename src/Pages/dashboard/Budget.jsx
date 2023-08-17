@@ -184,7 +184,7 @@ const Budget = () => {
         >
           Add New Budget
         </Button>
-      </Flex>
+      </Flex> 
       <BudgetCard onEditBudget={handleEditBudget} />
       <Modal
         isOpen={isOpen}
