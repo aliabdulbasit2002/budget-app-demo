@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import {
   Box,
-  Container,
   Flex,
   Grid,
   GridItem,
   Input,
   InputGroup,
   InputRightElement,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
@@ -40,6 +40,7 @@ function SearchBar({ handleSearch }) {
         placeholder="Search..."
         onChange={handleSearch}
         _focusWithin={{ borderColor: "green", boxShadow: "none" }}
+        bg="whiteAlpha.900"
       />
     </InputGroup>
   );
@@ -47,12 +48,12 @@ function SearchBar({ handleSearch }) {
 
 const RootLayout = () => {
   return (
-    <Container maxW="container" px={0} minH="100vh">
+    <Stack maxW="container" px={0} minH="100vh">
       <Grid templateColumns="repeat(12,1fr)">
         <GridItem colSpan={2}>
           <Navbar />
         </GridItem>
-        <GridItem colSpan={10} p={6} bg="gray.100">
+        <GridItem colSpan={10} p={6} bg="blackAlpha.100">
           <Flex align="center">
             <Text fontSize="2xl" fontWeight="bold">
               Dashboard
@@ -63,7 +64,7 @@ const RootLayout = () => {
           <Outlet />
         </GridItem>
       </Grid>
-    </Container>
+    </Stack>
   );
 };
 
