@@ -1,32 +1,45 @@
 import { Stat } from "@chakra-ui/react";
 import Chart from "react-google-charts";
-
-export const data = [
-  ["Element", "Density", { role: "style" }],
-  ["Mon", 8.94, "color: #25d41b"],
-  ["Wed", 9.3, "color: #25d41b"],
-  ["Thur", 11.45, "color: #25d41b"],
-  ["Fri", 3.45, "color: #25d41b"],
-  ["Sat", 1.45, "color: #25d41b"],
-  ["Sun", 21.45, "color: #25d41b"],
-];
-
-export const options = {
-  animation: {
-    startup: true,
-    easing: "linear",
-    duration: 1500,
-  },
-  enableInteractivity: false,
-};
+import { useSelector } from "react-redux";
 
 const DataChart = () => {
+  const budgetArray = useSelector((state) => state.appReducer.budget);
+
+  // Create an empty object to store monthly data
+  const monthlyData = {};
+
+  // Iterate through each budget and accumulate data
+  budgetArray.forEach((budget) => {
+    const startDate = new Date(budget.startDate);
+    const monthName = startDate.toLocaleString("default", { month: "long" });
+
+    if (!monthlyData[monthName]) {
+      monthlyData[monthName] = {
+        budgetTotal: 0,
+        expenseTotal: 0,
+      };
+    }
+
+    monthlyData[monthName].budgetTotal += parseFloat(budget.amount);
+    monthlyData[monthName].expenseTotal += parseFloat(budget.finance);
+  });
+
+  // Create the data array for the chart
+  const data = [["Month", "Budget Amount", "Expense Amount"]];
+  Object.entries(monthlyData).forEach(([monthName, { budgetTotal, expenseTotal }]) => {
+    data.push([monthName, budgetTotal, expenseTotal]);
+  });
+
+  const options = {
+    enableInteractivity: false,
+    height: 450,
+    width: "100%"
+  };
+
   return (
     <Stat rounded="xl" overflow="hidden">
       <Chart
         chartType="ColumnChart"
-        width="100%"
-        height="450px"
         data={data}
         options={options}
       />
@@ -35,3 +48,4 @@ const DataChart = () => {
 };
 
 export default DataChart;
+

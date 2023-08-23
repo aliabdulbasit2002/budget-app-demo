@@ -10,7 +10,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../Components/Sidebar/Navbar";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -47,16 +47,20 @@ function SearchBar({ handleSearch }) {
 }
 
 const RootLayout = () => {
+  const location = useLocation();
+
+  const routeName = location.pathname.split("/").pop().replace(/^\w/, (c) => c.toUpperCase());
+
   return (
-    <Stack maxW="container" px={0} minH="100vh">
+    <Stack maxW="container" px={0} h="100vh" overflow="hidden">
       <Grid templateColumns="repeat(12,1fr)">
         <GridItem colSpan={2}>
           <Navbar />
         </GridItem>
-        <GridItem colSpan={10} p={6} bg="blackAlpha.100">
+        <GridItem colSpan={10} p={6} bg="gray.200">
           <Flex align="center">
             <Text fontSize="2xl" fontWeight="bold">
-              Dashboard
+            {location.pathname === "/" ? "Dashboard" : routeName}
             </Text>
             <SearchBar />
             <Account />

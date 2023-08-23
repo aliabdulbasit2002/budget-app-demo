@@ -19,19 +19,22 @@ import ExpenseCard from "../../components/ExpenseCard";
 import { useDispatch, useSelector } from "react-redux";
 // import axios from "axios";
 import { nanoid } from "@reduxjs/toolkit";
+import { addFinanceData, updateFunction } from "../../slices/appSlices";
 
 const styles = {
   borderColor: "green",
   boxShadow: "none",
 };
 
-function ModalForm({ onClose }) {
+function ModalForm({ onClose, budget }) {
   const [financeBudget, setFinanceBudget] = useState({
     id: nanoid(),
     finance: "",
     recipient: "",
     reference: "",
   });
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -43,7 +46,13 @@ function ModalForm({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const financeData = {
+      financeAmount: parseFloat(financeBudget.finance),
+      recipient: financeBudget.recipient,
+      reference: financeBudget.reference,
+      date: new Date().toLocaleDateString(),
+    };
+    dispatch(addFinanceData({ budgetId: budget.id, financeData }));
     onClose();
   };
 
@@ -55,18 +64,20 @@ function ModalForm({ onClose }) {
           type="number"
           size="sm"
           _focusWithin={styles}
-          name="amount"
+          name="finance"
           onChange={handleChange}
+          value={financeBudget.finance}
         />
       </FormControl>
       <FormControl mt={5}>
-        <FormLabel>Recipient</FormLabel>
+        <FormLabel>Merchant Name</FormLabel>
         <Input
           type="text"
           size="sm"
           _focusWithin={styles}
           name="recipient"
           onChange={handleChange}
+          value={financeBudget.recipient}
         />
       </FormControl>
       <FormControl mt={5}>
@@ -77,11 +88,12 @@ function ModalForm({ onClose }) {
           _focusWithin={styles}
           name="reference"
           onChange={handleChange}
+          value={financeBudget.reference}
         />
       </FormControl>
       <Box mt={5}>
         <Button variant="solid" colorScheme="green" type="submit">
-          Pay Now
+          Record Finance
         </Button>
       </Box>
     </Box>
@@ -130,7 +142,7 @@ const Expense = () => {
             {budget ? `Finance ${budget.name}` : "Finance Budget"}
           </ModalHeader>
           <ModalBody>
-            <ModalForm onClose={onClose} />
+            <ModalForm onClose={onClose} budget={budget}/>
           </ModalBody>
         </ModalContent>
       </Modal>
