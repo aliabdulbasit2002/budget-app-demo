@@ -6,17 +6,31 @@ import {
   StatNumber,
   Text,
 } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { calculateTotalBudget } from "../../slices/appSlices";
 
 const TotalBudget = () => {
+  const state = useSelector((state) => state.appReducer);
+
+  const budgetUtilized = (state.totalFinancedBudget / state.totalBudget) * 100
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(calculateTotalBudget()); // Calculate total budget on component mount
+  }, [dispatch]);
+
+
   return (
     <Stat shadow="sm" p={5} bg="white" rounded="xl">
       <StatLabel as={Text} fontWeight="bold">
         Total Budget
       </StatLabel>
-      <StatNumber>345,670</StatNumber>
+      <StatNumber>GHS {state.totalBudget}.00</StatNumber>
       <StatHelpText>
         <StatArrow type="increase" />
-        23.36%
+        {budgetUtilized.toFixed(2)}%
       </StatHelpText>
     </Stat>
   );
