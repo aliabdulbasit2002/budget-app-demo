@@ -14,15 +14,18 @@ import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../Components/Sidebar/Navbar";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useAuth } from "../Config/firebase";
 
 function Account() {
+  const currentUser = useAuth();
+
   return (
     <Flex ms="auto" align="center" gap={3}>
       <FaRegUserCircle fontSize="2.5rem" />
       <Box fontSize="xs">
-        <Text>Test User</Text>
+        <Text>{currentUser?.email}</Text>
         <Text color="green.500" fontWeight="semibold">
-          Admin
+          {currentUser?.displayName ? currentUser?.displayName : "user"}
         </Text>
       </Box>
     </Flex>
@@ -49,7 +52,10 @@ function SearchBar({ handleSearch }) {
 const RootLayout = () => {
   const location = useLocation();
 
-  const routeName = location.pathname.split("/").pop().replace(/^\w/, (c) => c.toUpperCase());
+  const routeName = location.pathname
+    .split("/")
+    .pop()
+    .replace(/^\w/, (c) => c.toUpperCase());
 
   return (
     <Stack maxW="container" px={0} h="100vh" overflow="hidden">
@@ -60,7 +66,7 @@ const RootLayout = () => {
         <GridItem colSpan={10} p={6} bg="gray.200">
           <Flex align="center">
             <Text fontSize="2xl" fontWeight="bold">
-            {location.pathname === "/" ? "Dashboard" : routeName}
+              {location.pathname === "/" ? "Dashboard" : routeName}
             </Text>
             <SearchBar />
             <Account />
