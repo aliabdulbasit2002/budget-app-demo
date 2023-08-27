@@ -25,7 +25,7 @@ function Account() {
       <Box fontSize="xs">
         <Text>{currentUser?.email}</Text>
         <Text color="green.500" fontWeight="semibold">
-          {currentUser?.displayName ? currentUser?.displayName : "user"}
+          {currentUser?.displayName ? currentUser?.displayName : "User"}
         </Text>
       </Box>
     </Flex>

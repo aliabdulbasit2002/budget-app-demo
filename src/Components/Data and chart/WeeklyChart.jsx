@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Stack, Stat, Text } from "@chakra-ui/react";
+import { Box, Flex, Stack, Stat, Text } from "@chakra-ui/react";
 import React from "react";
 import Chart from "react-google-charts";
 import { useSelector } from "react-redux";
@@ -25,6 +25,7 @@ const WeeklyChart = () => {
   // Create an empty object to store weekly data
   const weeklyData = {};
 
+  var totalBudget = 0
   // Iterate through each budget and accumulate data by week
   budgetArray.forEach((budget) => {
     const startDate = new Date(budget.startDate);
@@ -37,6 +38,7 @@ const WeeklyChart = () => {
       };
     }
 
+    totalBudget += parseFloat(budget.amount)
     weeklyData[weekNumber].budgetTotal += parseFloat(budget.amount);
     weeklyData[weekNumber].expenseTotal += parseFloat(budget.finance);
   });
@@ -51,17 +53,25 @@ const WeeklyChart = () => {
 
   const options = {
     enableInteractivity: false,
-    height: 450,
-    width: "100%"
+    height: 410 ,
   };
 
   return (
-    <Stat rounded="xl" overflow="hidden">
-      <Chart
-        chartType="ColumnChart"
-        data={data}
-        options={options}
-      />
+    <Stat rounded="xl" bg="whiteAlpha.900" border="1px solid white" overflow="hidden">
+      {totalBudget === 0 ? (
+          <Flex
+            justify="center"
+            fontSize="sm"
+            alignItems="center"
+            h="410px"
+            bg="whiteAlpha.900"
+            color="gray.500"
+          >
+           Weekly Budget and Expense bar will show here
+          </Flex>
+        ) : (
+          <Chart chartType="ColumnChart" data={data} options={options} />
+        )}
     </Stat>
   );
 };

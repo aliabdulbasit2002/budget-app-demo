@@ -23,14 +23,14 @@ const TotalBudget = () => {
 
 
   return (
-    <Stat shadow="sm" p={5} bg="white" rounded="xl">
+    <Stat shadow="sm" p={5} bg="white" rounded="xl" h={{xl: "125px"}}>
       <StatLabel as={Text} fontWeight="bold">
         Total Budget
       </StatLabel>
       <StatNumber>GHS {state.totalBudget}.00</StatNumber>
       <StatHelpText>
         <StatArrow type="increase" />
-        {budgetUtilized.toFixed(2)}%
+        {isNaN(budgetUtilized) ? "0.00%" : `${budgetUtilized.toFixed(2)}%`}
       </StatHelpText>
     </Stat>
   );
