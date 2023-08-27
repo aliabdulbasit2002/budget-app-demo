@@ -1,7 +1,5 @@
 import {
   Stat,
-  StatArrow,
-  StatHelpText,
   StatLabel,
   StatNumber,
   Text,
@@ -19,15 +17,11 @@ const TotalExpence = () => {
     dispatch(calculateTotalFinancedBudget()); // Calculate total budget on component mount
   }, [dispatch]);
   return (
-    <Stat shadow="sm" p={5} bg="white" rounded="xl">
+    <Stat shadow="sm" p={5} bg="white" rounded="xl" h="125px">
       <StatLabel as={Text} fontWeight="bold">
         Total Expense
       </StatLabel>
       <StatNumber>GHS {state.totalFinancedBudget}.00</StatNumber>
-      <StatHelpText>
-        <StatArrow type="increase" />
-        23.36%
-      </StatHelpText>
     </Stat>
   );
 };

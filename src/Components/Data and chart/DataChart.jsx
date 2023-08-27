@@ -1,4 +1,4 @@
-import { Stat } from "@chakra-ui/react";
+import { Flex, Stat } from "@chakra-ui/react";
 import Chart from "react-google-charts";
 import { useSelector } from "react-redux";
 
@@ -7,6 +7,8 @@ const DataChart = () => {
 
   // Create an empty object to store monthly data
   const monthlyData = {};
+
+  var totalBudget = 0;
 
   // Iterate through each budget and accumulate data
   budgetArray.forEach((budget) => {
@@ -20,6 +22,7 @@ const DataChart = () => {
       };
     }
 
+    totalBudget += parseFloat(budget.amount);
     monthlyData[monthName].budgetTotal += parseFloat(budget.amount);
     monthlyData[monthName].expenseTotal += parseFloat(budget.finance);
   });
@@ -32,17 +35,25 @@ const DataChart = () => {
 
   const options = {
     enableInteractivity: false,
-    height: 450,
-    width: "100%"
+    height: 410,
   };
 
   return (
     <Stat rounded="xl" overflow="hidden">
-      <Chart
-        chartType="ColumnChart"
-        data={data}
-        options={options}
-      />
+      {totalBudget === 0 ? (
+          <Flex
+            justify="center"
+            fontSize="sm"
+            alignItems="center"
+            h="410px"
+            bg="whiteAlpha.900"
+            color="gray.500"
+          >
+           Monthly Budget and Expense bar will show here
+          </Flex>
+        ) : (
+          <Chart chartType="ColumnChart" data={data} options={options} />
+        )}
     </Stat>
   );
 };

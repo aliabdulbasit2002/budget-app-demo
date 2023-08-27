@@ -92,7 +92,7 @@ function ModalForm({ onClose, budget }) {
         />
       </FormControl>
       <Box mt={5}>
-        <Button variant="solid" colorScheme="green" type="submit">
+        <Button variant="solid" colorScheme="whatsapp" type="submit">
           Record Finance
         </Button>
       </Box>
