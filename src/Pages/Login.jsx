@@ -56,7 +56,7 @@ const Login = () => {
       });
     } catch (error) {
       toast({
-        description: error.message,
+        description: "User Not Found",
         duration: 3000,
         status: "error",
         colorScheme: "red",

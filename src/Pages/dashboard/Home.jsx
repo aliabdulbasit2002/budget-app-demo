@@ -22,6 +22,7 @@ import {
   SimpleGrid,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import ExpenseBreakdown from "../../Components/ExpenseBreakdown";
 import DataChart from "../../components/Data and chart/DataChart";
@@ -31,6 +32,7 @@ import ExpenseHistory from "../../components/ExpenseHistory";
 import WeeklyChart from "../../components/Data and chart/WeeklyChart";
 import { useState } from "react";
 import { PaystackButton } from "react-paystack";
+import { useNavigate } from "react-router-dom";
 
 const pricingData = [
   {
@@ -65,64 +67,77 @@ const styles = {
 
 function CheckoutForm() {
   const publicKey = "pk_test_94cabd0c9abff32deda8c2bdcc10c41d1faee914";
-  const amount = 900; // Remember, set in kobo!
+  const amount = 10; // Remember, set in kobo!
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
+  const toast = useToast();
+  const navigate = useNavigate();
+
   const componentProps = {
     email,
-    amount,
+    amount: amount * 100,
+    currency: "GHS",
     metadata: {
       name,
       phone,
     },
     publicKey,
     text: "Pay Now",
-    onSuccess: () =>
-      alert("Thanks for doing business with us! Come back soon!!"),
+    onSuccess: () => {
+      toast({
+        description: "Thanks for doing business with us! Come back soon!!",
+        duration: 3000,
+        status: "success",
+        colorScheme: "green",
+      }),
+        navigate("/");
+    },
     onClose: () => alert("Wait! Don't leave :("),
   };
 
   return (
     <>
-      <Container as="form" mb={5} maxW={{ lg: "40vw" }}>
+      <Container mb={5} maxW={{ lg: "40vw" }}>
         <Text fontWeight="bold" color="green.500" fontStyle="italic">
           This is a one-time payment of GHS 9.00
         </Text>
-        <FormControl mt={5}>
-          <FormLabel>Name</FormLabel>
-          <Input
-            type="text"
-            size="sm"
-            _focusWithin={styles}
-            name="name"
-            onChange={(e) => setName(e.target.value)}
-            borderColor="green.500"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Email</FormLabel>
-          <Input
-            type="email"
-            size="sm"
-            _focusWithin={styles}
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-            borderColor="green.500"
-          />
-        </FormControl>
-        <FormControl mt={5}>
-          <FormLabel>Phone</FormLabel>
-          <Input
-            type="tel"
-            size="sm"
-            _focusWithin={styles}
-            name="phone"
-            onChange={(e) => setPhone(e.target.value)}
-            borderColor="green.500"
-          />
-        </FormControl>
+        <form>
+          <FormControl mt={5}>
+            <FormLabel>Name</FormLabel>
+            <Input
+              type="text"
+              size="sm"
+              _focusWithin={styles}
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+              borderColor="green.500"
+            />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Email</FormLabel>
+            <Input
+              type="email"
+              size="sm"
+              _focusWithin={styles}
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              borderColor="green.500"
+            />
+          </FormControl>
+          <FormControl mt={5}>
+            <FormLabel>Phone</FormLabel>
+            <Input
+              type="tel"
+              size="sm"
+              _focusWithin={styles}
+              name="phone"
+              onChange={(e) => setPhone(e.target.value)}
+              borderColor="green.500"
+            />
+          </FormControl>
+        </form>
         <Box
           mt={5}
           bg="whatsapp.500"

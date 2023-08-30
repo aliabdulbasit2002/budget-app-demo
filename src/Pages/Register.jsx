@@ -49,6 +49,7 @@ const Register = () => {
       setDoc(doc(db, "users", res.user.uid), {
         ...registerUser,
         timeStamp: serverTimestamp(),
+        subscription: false,
       });
       setRegisterUser({
         firstName: "",
@@ -63,7 +64,6 @@ const Register = () => {
         colorScheme: "green",
       });
     } catch (error) {
-      console.log(error.message);
       setError(true);
     }
     setIsLoading(false);
