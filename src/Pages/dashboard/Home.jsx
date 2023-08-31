@@ -33,6 +33,9 @@ import WeeklyChart from "../../components/Data and chart/WeeklyChart";
 import { useState } from "react";
 import { PaystackButton } from "react-paystack";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateHasPaid } from "../../slices/appSlices";
+import { useSelector } from "react-redux";
 
 const pricingData = [
   {
@@ -67,13 +70,16 @@ const styles = {
 
 function CheckoutForm() {
   const publicKey = "pk_test_94cabd0c9abff32deda8c2bdcc10c41d1faee914";
-  const amount = 10; // Remember, set in kobo!
+  const amount = 9.99; // Remember, set in kobo!
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
+  const dispatch = useDispatch();
+
   const toast = useToast();
   const navigate = useNavigate();
+
 
   const componentProps = {
     email,
@@ -91,8 +97,9 @@ function CheckoutForm() {
         duration: 3000,
         status: "success",
         colorScheme: "green",
-      }),
-        navigate("/");
+      });
+      dispatch(updateHasPaid(true));//update user payment status to true
+      setTimeout(()=>{navigate("/")},500);
     },
     onClose: () => alert("Wait! Don't leave :("),
   };
@@ -101,7 +108,7 @@ function CheckoutForm() {
     <>
       <Container mb={5} maxW={{ lg: "40vw" }}>
         <Text fontWeight="bold" color="green.500" fontStyle="italic">
-          This is a one-time payment of GHS 9.00
+          This is a one-time payment of GHS 9.99
         </Text>
         <form>
           <FormControl mt={5}>
@@ -190,7 +197,7 @@ function Pricing() {
             </CardBody>
             <CardFooter pt={-5}>
               {pricing.title === "Basic" ? null : (
-                <Button mx="auto" colorScheme="whatsapp" onClick={onOpen}>
+                <Button mx="auto" colorScheme="whatsapp" onClick={()=> onOpen()}>
                   Proceed
                 </Button>
               )}
@@ -217,8 +224,18 @@ function Pricing() {
 const Home = () => {
   const [activeTab, setActiveTab] = useState("Monthly");
 
+  const userHasPaid = useSelector((state)=> state.appReducer.hasPaid);
+
   const handleTabChange = (tab) => {
-    setActiveTab(tab);
+    if (tab === "Weekly") {
+      if (!userHasPaid) {
+        onOpen(); // Open the pricing modal
+      } else {
+        setActiveTab(tab); // Switch to the "Weekly" tab chart
+      }
+    } else {
+      setActiveTab(tab);
+    }
   };
 
   const renderChart = () => {
@@ -257,7 +274,7 @@ const Home = () => {
                 activeTab === "Weekly" ? "1px solid" : "1px solid transparent"
               }
               cursor="pointer"
-              onClick={() => onOpen()}
+              onClick={() => handleTabChange("Weekly")}
             >
               Weekly
             </Text>

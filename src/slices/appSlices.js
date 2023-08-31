@@ -17,6 +17,7 @@ const initialState = {
   isBudgetButtonEnabled: false,
   totalBudget: 0,
   totalFinancedBudget: 0,
+  hasPaid: false,
   //other states...
 };
 
@@ -42,6 +43,9 @@ const appSlices = createSlice({
         }
         budget.financeDetails.push(financeData);
       }
+    },
+    updateHasPaid: (state, action) => {
+      state.hasPaid = action.payload;
     },
     enableCard: (state, action) => {
       state.enabledCardId = action.payload;
@@ -92,6 +96,7 @@ export const {
   updateFunction,
   deleteFunction,
   enableCard,
+  updateHasPaid,
   clearEnabledCard,
   enableBudgetButton,
   disableBudgetButton,

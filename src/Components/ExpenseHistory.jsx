@@ -27,26 +27,32 @@ const ExpenseHistory = () => {
       <Stack mt={3}>
         <Text fontWeight="bold">Expense History</Text>
         <Box h="45vh" bg="white" rounded="xl">
-          <TableContainer p={2}>
-            <Table variant="simple">
-              {expenseHistoryIsEmpty ? (
-                <>
-                  <Flex
-                    fontWeight="bold"
-                    color="gray.500"
-                    justify="center"
-                    gap={{ lg: 5, xl: 16 }}
-                  >
-                    <Text>Merchant</Text>
-                    <Text>Reference</Text>
-                    <Text>Amount</Text>
-                    <Text>Date</Text>
-                  </Flex>
-                  <Text align="center" mt="25%" color="gray.500" w="100%" fontSize="sm">
-                    Finance a budget to see your expense history
-                  </Text>
-                </>
-              ) : (
+          {expenseHistoryIsEmpty ? (
+            <>
+              <Flex
+                fontWeight="bold"
+                color="gray.500"
+                justify="center"
+                gap={{ lg: 5, xl: 16 }}
+              >
+                <Text>Merchant</Text>
+                <Text>Reference</Text>
+                <Text>Amount</Text>
+                <Text>Date</Text>
+              </Flex>
+              <Text
+                align="center"
+                mt="25%"
+                color="gray.500"
+                w="100%"
+                fontSize="sm"
+              >
+                Finance a budget to see your expense history
+              </Text>
+            </>
+          ) : (
+            <TableContainer p={2}>
+              <Table variant="simple">
                 <>
                   <Thead>
                     <Tr>
@@ -73,9 +79,9 @@ const ExpenseHistory = () => {
                     )}
                   </Tbody>
                 </>
-              )}
-            </Table>
-          </TableContainer>
+              </Table>
+            </TableContainer>
+          )}
         </Box>
       </Stack>
     </>
