@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
 import {
   Navigate,
-  Outlet,
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom/dist";
-import { auth, useAuth } from "./Config/firebase";
+import { useAuth } from "./Config/firebase";
 
 // Layout
 import RootLayout from "./Layout/RootLayout";
@@ -78,7 +77,7 @@ const App = () => {
               <Register />
             </RedirectIfLoggedIn>
           }
-        />
+        /> 
       </>
     )
   );
