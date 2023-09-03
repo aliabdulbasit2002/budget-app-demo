@@ -1,6 +1,7 @@
-import { Flex, Stat } from "@chakra-ui/react";
+import { Flex, Image, Stat } from "@chakra-ui/react";
 import Chart from "react-google-charts";
 import { useSelector } from "react-redux";
+import BarChart  from "../../assets/Analyze-amico.svg";
 
 const DataChart = () => {
   const budgetArray = useSelector((state) => state.appReducer.budget);
@@ -29,9 +30,11 @@ const DataChart = () => {
 
   // Create the data array for the chart
   const data = [["Month", "Budget Amount", "Expense Amount"]];
-  Object.entries(monthlyData).forEach(([monthName, { budgetTotal, expenseTotal }]) => {
-    data.push([monthName, budgetTotal, expenseTotal]);
-  });
+  Object.entries(monthlyData).forEach(
+    ([monthName, { budgetTotal, expenseTotal }]) => {
+      data.push([monthName, budgetTotal, expenseTotal]);
+    }
+  );
 
   const options = {
     enableInteractivity: false,
@@ -39,24 +42,30 @@ const DataChart = () => {
   };
 
   return (
-    <Stat rounded="xl" overflow="hidden" shadow="lg" borderTop="5px solid limegreen">
+    <Stat
+      rounded="xl"
+      overflow="hidden"
+      shadow="lg"
+      borderTop="5px solid limegreen"
+    >
       {totalBudget === 0 ? (
-          <Flex
-            justify="center"
-            fontSize="sm"
-            alignItems="center"
-            h="410px"
-            bg="whiteAlpha.900"
-            color="gray.500"
-          >
-           Monthly Budget and Expense bar will show here
-          </Flex>
-        ) : (
-          <Chart chartType="ColumnChart" data={data} options={options} />
-        )}
+        <Flex
+          justify="center"
+          fontSize="sm"
+          alignItems="center"
+          direction="column"
+          h="410px"
+          bg="whiteAlpha.900"
+          color="gray.500"
+        >
+          <Image src={BarChart} h={250}/>
+          Monthly Budgets and Expense bar will show here
+        </Flex>
+      ) : (
+        <Chart chartType="ColumnChart" data={data} options={options} />
+      )}
     </Stat>
   );
 };
 
 export default DataChart;
-
