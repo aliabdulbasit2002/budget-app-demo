@@ -41,7 +41,7 @@ export const logout = () => {
 
 //  custom hook to get current User
 export const useAuth = () => {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(false);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) =>
       setCurrentUser(user)

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Box,
   Button,
@@ -30,9 +31,8 @@ import TotalExpence from "../../components/Data and chart/TotalExpence";
 import TotalBudget from "../../components/Data and chart/TotalBudget";
 import ExpenseHistory from "../../components/ExpenseHistory";
 import WeeklyChart from "../../components/Data and chart/WeeklyChart";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { updateHasPaid } from "../../slices/appSlices";
 import { useSelector } from "react-redux";
@@ -68,7 +68,7 @@ const styles = {
   boxShadow: "none",
 };
 
-function CheckoutForm() {
+function CheckoutForm({closeCheckout, closePricing}) {
   const publicKey = "pk_test_94cabd0c9abff32deda8c2bdcc10c41d1faee914";
   const amount = 9.99; // Remember, set in kobo!
   const [email, setEmail] = useState("");
@@ -78,7 +78,17 @@ function CheckoutForm() {
   const dispatch = useDispatch();
 
   const toast = useToast();
-  const navigate = useNavigate();
+
+  const userHasPaid = useSelector((state) => state.appReducer.hasPaid);
+
+  useEffect(() => {
+    if (userHasPaid) {
+      console.log("User has paid:", userHasPaid);
+      closeCheckout();
+      closePricing();
+      // You can navigate or perform other actions here
+    }
+  }, [userHasPaid, closeCheckout, closePricing]);
 
 
   const componentProps = {
@@ -93,13 +103,12 @@ function CheckoutForm() {
     text: "Pay Now",
     onSuccess: () => {
       toast({
-        description: "Thanks for doing business with us! Come back soon!!",
+        description: "Enjoy all the goodies that come with Pro",
         duration: 3000,
         status: "success",
         colorScheme: "green",
       });
       dispatch(updateHasPaid(true));//update user payment status to true
-      setTimeout(()=>{navigate("/")},500);
     },
     onClose: () => alert("Wait! Don't leave :("),
   };
@@ -161,7 +170,7 @@ function CheckoutForm() {
   );
 }
 
-function Pricing() {
+function Pricing({closePricing}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -170,7 +179,7 @@ function Pricing() {
         {pricingData.map((pricing, index) => (
           <Card
             key={index}
-            height="50vh"
+            height="25rem"
             textAlign="center"
             bg="gray.50"
             shadow="2xl"
@@ -213,7 +222,7 @@ function Pricing() {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <CheckoutForm />
+            <CheckoutForm closeCheckout={onClose} closePricing={closePricing}/>
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -249,13 +258,13 @@ const Home = () => {
 
   return (
     <>
-      <Grid templateColumns="repeat(12,1fr)" mt={10} py={5}>
+      <Grid templateColumns="repeat(12,1fr)" px={10} pt={5}>
         <GridItem colSpan={7} me={10}>
-          <HStack mb={6} gap={6} mt={6} w="90%">
+          <HStack mb={12} gap={10} mt={6} w={{xl: "80%"}}>
             <TotalExpence />
             <TotalBudget />
           </HStack>
-          <HStack mb={6} gap={6}>
+          <HStack mb={6} gap={5}>
             <Text
               fontWeight="bold"
               color={activeTab === "Monthly" ? "green.500" : "black"}
@@ -273,6 +282,7 @@ const Home = () => {
               borderBottom={
                 activeTab === "Weekly" ? "1px solid" : "1px solid transparent"
               }
+              opacity={userHasPaid ? "100%" : "50%"}
               cursor="pointer"
               onClick={() => handleTabChange("Weekly")}
             >
@@ -292,7 +302,7 @@ const Home = () => {
           <ModalHeader textAlign="center">Pricing</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Pricing />
+            <Pricing closePricing={onClose}/>
           </ModalBody>
         </ModalContent>
       </Modal>

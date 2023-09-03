@@ -174,7 +174,7 @@ const Budget = () => {
 
   return (
     <>
-      <Flex mt={10}>
+      <Flex mt={5} px={5}>
         <Button
           leftIcon={<IoIosAdd />}
           colorScheme="whatsapp"

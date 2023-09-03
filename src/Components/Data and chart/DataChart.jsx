@@ -39,7 +39,7 @@ const DataChart = () => {
   };
 
   return (
-    <Stat rounded="xl" overflow="hidden">
+    <Stat rounded="xl" overflow="hidden" shadow="lg" borderTop="5px solid limegreen">
       {totalBudget === 0 ? (
           <Flex
             justify="center"

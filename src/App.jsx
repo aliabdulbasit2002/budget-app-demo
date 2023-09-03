@@ -18,66 +18,46 @@ import Register from "./Pages/Register";
 import Expense from "./pages/dashboard/Expense";
 import Budget from "./pages/dashboard/Budget";
 import ErrorPage from "./Pages/ErrorPage";
+import Help from "./pages/Help";
+import LoadingIndicator from "./components/LoadingIndicator";
 
 const App = () => {
-  // get Current user
+  // Get the current user
   const currentUser = useAuth();
 
-  // Protected Routes
-  const RequiredAuth = ({ children }) => {
-    return currentUser ? children : <Navigate to="/login" />;
-  };
-  const RedirectIfLoggedIn = ({ children }) => {
-    return currentUser ? <Navigate to="/" /> : children;
-  };
+  // Determine if the user is authenticated
+  const isAuthenticated = !!currentUser;
 
+  // Determine if the user is logged out
+  const isLoggedOut = currentUser === null;
+
+  // Protected Routes
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={<RootLayout />}>
-          <Route
-            index
-            element={
-              <RequiredAuth>
-                <Home />
-              </RequiredAuth>
-            }
-          />
-
-          <Route
-            path="expenses"
-            element={
-              <RequiredAuth>
-                <Expense />
-              </RequiredAuth>
-            }
-          />
-          <Route
-            path="budget"
-            element={
-              <RequiredAuth>
-                <Budget />
-              </RequiredAuth>
-            }
-          />
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <RootLayout isAuthenticated={isAuthenticated} />
+            ) : isLoggedOut ? (
+              <Navigate to="/login" /> // Redirect to login when logged out
+            ) : (
+              <LoadingIndicator />
+            )
+          }
+        >
+          <Route index element={isAuthenticated ? <Home /> : null} />
+          <Route path="expenses" element={<Expense />} />
+          <Route path="budgets" element={<Budget />} />
+          <Route path="support" element={<Help />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
         <Route
           path="login"
-          element={
-            <RedirectIfLoggedIn>
-              <Login />
-            </RedirectIfLoggedIn>
-          }
+          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
         />
-        <Route
-          path="register"
-          element={
-            <RedirectIfLoggedIn>
-              <Register />
-            </RedirectIfLoggedIn>
-          }
-        /> 
+        <Route path="register" element={<Register />} />
       </>
     )
   );
