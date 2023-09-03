@@ -136,7 +136,7 @@ const Navbar = () => {
           </Button>
         </Tooltip>
         <Flex mx="auto" w="75%" >
-          <Text fontSize="2xl" fontWeight="bold">
+          <Text fontSize="2xl" fontWeight="bold" display={{base: "none", lg: "inline-block"}}>
             {location.pathname === "/" ? "Dashboard" : routeName}
           </Text>
           <Flex w="80%" ms="auto">
@@ -153,9 +153,9 @@ const Navbar = () => {
         size={{ base: "full", lg: "xs" }}
       >
         <DrawerOverlay />
-        <DrawerContent bgColor="whatsapp.700" pt={10}>
-          <DrawerCloseButton color="white" fontSize="xl" mt={14}/>
-          <DrawerHeader color="yellow.300" fontSize="3xl">Budget Buddy</DrawerHeader>
+        <DrawerContent bgColor="whatsapp.700" pt={10} px={2}>
+          <DrawerCloseButton color="white" fontSize="xl" mt={14} me={3}/>
+          <DrawerHeader color="yellow.300" fontSize="3xl" fontFamily="cursive">Budget Buddy</DrawerHeader>
           <DrawerBody mt={10}>
             {navBarItems.map((navBarItem) => (
               <Flex
@@ -168,12 +168,12 @@ const Navbar = () => {
                 _hover={{ backgroundColor: "#ffffff30" }}
                 mt={5}
                 p={2}
-                fontSize="2xl"
+                fontSize="xl"
                 borderRadius={4}
                 transition="all 300ms ease-in-out"
                 color="white"
               >
-                {navBarItem.iconSrc}
+                <Box color="yellow.300">{navBarItem.iconSrc}</Box>
                 {navBarItem.title}
               </Flex>
             ))}

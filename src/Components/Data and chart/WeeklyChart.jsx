@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
-import { Box, Flex, Stack, Stat, Text } from "@chakra-ui/react";
+import { Flex, Image, Stat } from "@chakra-ui/react";
 import React from "react";
 import Chart from "react-google-charts";
 import { useSelector } from "react-redux";
+import BarChart  from "../../assets/Analyze-amico.svg";
 
 // Function to get the ISO week number of a date
 function getWeekNumber(date) {
@@ -73,7 +74,9 @@ const WeeklyChart = () => {
           h="410px"
           bg="whiteAlpha.900"
           color="gray.500"
+          direction="column"
         >
+          <Image src={BarChart} h={250}/>
           Weekly Budget and Expense bar will show here
         </Flex>
       ) : (
