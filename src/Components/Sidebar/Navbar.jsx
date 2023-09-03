@@ -1,13 +1,35 @@
 /* eslint-disable react/prop-types */
-import { Box, Button, Flex, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Tooltip,
+  useDisclosure,
+  useToast,
+  Input,
+  InputGroup,
+  InputRightElement,
+  Text,
+} from "@chakra-ui/react";
 import { AiOutlineHome } from "react-icons/ai";
 import { SiExpensify } from "react-icons/si";
 import { PiPiggyBank } from "react-icons/pi";
 import { RiMessage2Line } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { logout } from "../../Config/firebase";
-import { useState } from "react";
+import { logout, useAuth } from "../../Config/firebase";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HiMenuAlt3 } from "react-icons/hi";
+import { FaRegUserCircle } from "react-icons/fa";
+import { AiOutlineSearch } from "react-icons/ai";
+import { useLocation } from "react-router-dom";
 
 const navBarItems = [
   {
@@ -22,17 +44,53 @@ const navBarItems = [
   },
   {
     iconSrc: <PiPiggyBank />,
-    title: "Budget",
-    path: "budget",
+    title: "Budgets",
+    path: "budgets",
   },
   {
     iconSrc: <RiMessage2Line />,
     title: "Help & Support",
+    path: "support",
   },
 ];
 
+function Account() {
+  const currentUser = useAuth();
+
+  return (
+    <Flex ms="auto" align="center" gap={3}>
+      <FaRegUserCircle fontSize="2.5rem" />
+      <Box fontSize="xs">
+        <Text>{currentUser?.email}</Text>
+        <Text color="green.500" fontWeight="semibold">
+          {currentUser?.displayName ? currentUser?.displayName : "User"}
+        </Text>
+      </Box>
+    </Flex>
+  );
+}
+
+function SearchBar({ handleSearch }) {
+  return (
+    <InputGroup w="full" ms="auto">
+      <InputRightElement pointerEvents="none">
+        <AiOutlineSearch />
+      </InputRightElement>
+      <Input
+        type="search"
+        placeholder="Search..."
+        onChange={handleSearch}
+        _focusWithin={{ borderColor: "green", boxShadow: "none" }}
+        bg="whiteAlpha.900"
+      />
+    </InputGroup>
+  );
+}
+
 const Navbar = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -57,47 +115,83 @@ const Navbar = () => {
       });
     }
   };
+  const location = useLocation();
+
+  const routeName = location.pathname
+    .split("/")
+    .pop()
+    .replace(/^\w/, (c) => c.toUpperCase());
+
   return (
     <>
-      <Flex
-        direction="column"
-        h="100vh"
-        bg="green.700"
-        color="whiteAlpha.900"
-        fontWeight="semibold"
-        pt={10}
-      >
-        Dashboard
-        <Box mx={{ base: "0", xl: 5 }} flex="1" mt={14}>
-          {navBarItems.map((navBarItem) => (
-            <Flex
-              as={Link}
-              to={navBarItem.path}
-              key={navBarItem.title}
-              align="center"
-              gap={3}
-              _hover={{ backgroundColor: "#ffffff30" }}
-              mt={2}
-              p={2}
-              borderRadius={4}
-              transition="all 300ms ease-in-out"
-            >
-              {navBarItem.iconSrc}
-              {navBarItem.title}
-            </Flex>
-          ))}
-        </Box>
-        <Button
-          onClick={handleLogout}
-          colorScheme="green"
-          w="80%"
-          mx="auto"
-          mb={2}
-          isLoading={isLoading}
-        >
-          Logout
-        </Button>
+      <Flex align="center" p={5}>
+        <Tooltip label="menu" hasArrow>
+          <Button
+            ref={btnRef}
+            bg="transparent"
+            _hover={{ bg: "#0062ff22" }}
+            onClick={onOpen}
+          >
+            <HiMenuAlt3 fontSize="2rem" color="limegreen" />
+          </Button>
+        </Tooltip>
+        <Flex mx="auto" w="75%" >
+          <Text fontSize="2xl" fontWeight="bold">
+            {location.pathname === "/" ? "Dashboard" : routeName}
+          </Text>
+          <Flex w="80%" ms="auto">
+            <SearchBar />
+          </Flex>
+        </Flex>
+        <Account />
       </Flex>
+      <Drawer
+        isOpen={isOpen}
+        placement="left"
+        onClose={onClose}
+        finalFocusRef={btnRef}
+        size={{ base: "full", lg: "xs" }}
+      >
+        <DrawerOverlay />
+        <DrawerContent bgColor="whatsapp.700" pt={10}>
+          <DrawerCloseButton color="white" fontSize="xl" mt={14}/>
+          <DrawerHeader color="yellow.300" fontSize="3xl">Budget Buddy</DrawerHeader>
+          <DrawerBody mt={10}>
+            {navBarItems.map((navBarItem) => (
+              <Flex
+                as={Link}
+                to={navBarItem.path}
+                key={navBarItem.title}
+                align="center"
+                gap={3}
+                onClick={onClose}
+                _hover={{ backgroundColor: "#ffffff30" }}
+                mt={5}
+                p={2}
+                fontSize="2xl"
+                borderRadius={4}
+                transition="all 300ms ease-in-out"
+                color="white"
+              >
+                {navBarItem.iconSrc}
+                {navBarItem.title}
+              </Flex>
+            ))}
+          </DrawerBody>
+          <DrawerFooter>
+            <Button
+              onClick={handleLogout}
+              colorScheme="green"
+              w="80%"
+              mx="auto"
+              mb={2}
+              isLoading={isLoading}
+            >
+              Logout
+            </Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
     </>
   );
 };

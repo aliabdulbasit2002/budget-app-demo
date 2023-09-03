@@ -17,14 +17,16 @@ const BudgetCard = ({onEditBudget}) => {
 
   return (
     <>
-      <Flex mt={10} gap={5}>
+      <Flex mt={5} gap={5} mx={10}>
         {state.budget.map((budget) => {
           const isGreen = budget.finance <= budget.amount;
           return (
             <Card
               key={budget.id}
-              maxW="sm"
+              w="fit-content"
               borderTop={isGreen ? "5px solid limegreen" : "5px solid crimson"}
+              bg="gray.50"
+              shadow="lg"
             >
               <CardBody>
                 <Heading size="sm">{budget.name}</Heading>

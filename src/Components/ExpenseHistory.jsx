@@ -24,9 +24,9 @@ const ExpenseHistory = () => {
 
   return (
     <>
-      <Stack mt={3}>
+      <Stack mt={10}>
         <Text fontWeight="bold">Expense History</Text>
-        <Box h="45vh" bg="white" rounded="xl">
+        <Box h="45vh" bg="white" rounded="xl" shadow="lg" borderTop="5px solid" borderTopColor="gray.300">
           {expenseHistoryIsEmpty ? (
             <>
               <Flex
@@ -34,6 +34,7 @@ const ExpenseHistory = () => {
                 color="gray.500"
                 justify="center"
                 gap={{ lg: 5, xl: 16 }}
+                mt={5}
               >
                 <Text>Merchant</Text>
                 <Text>Reference</Text>

@@ -4,7 +4,7 @@ const initialState = {
   budget: [
     {
       id: nanoid(),
-      name: "Groceries for August",
+      name: "Budget Name",
       amount: 0,
       finance: 0,
       financeDetails: [],

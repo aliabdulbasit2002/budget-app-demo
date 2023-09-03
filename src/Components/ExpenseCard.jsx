@@ -36,7 +36,7 @@ const ExpenseCard = () => {
   };
   return (
     <>
-      <Flex mt={10} gap={5}>
+      <Flex mt={5} gap={5} mx={10}>
         {state.budget.map((budget) => {
           const isCardEnabled = budget.id === enabledCardId;
 
@@ -44,11 +44,12 @@ const ExpenseCard = () => {
             <Card
               key={budget.id}
               maxW="sm"
-              borderTop="5px solid crimson"
+              borderTop="5px solid limegreen"
               cursor={isCardEnabled ? "default" : "pointer"}
               filter={isCardEnabled ? "grayscale(0%)" : "grayscale(80%)"}
               opacity={isCardEnabled ? "1" : "0.6"}
               onClick={() => handleCardClick(budget)}
+              shadow="lg"
             >
               <CardBody>
                 <Heading size="sm">{budget.name}</Heading>
@@ -59,7 +60,7 @@ const ExpenseCard = () => {
                 </Flex>
                 <Progress
                   rounded={5}
-                  colorScheme="red"
+                  colorScheme="whatsapp"
                   hasStripe
                   my={4}
                   isAnimated

@@ -102,7 +102,6 @@ function ModalForm({ onClose, budget }) {
 
 const Expense = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const dispatch = useDispatch();
   const isBudgetButtonEnabled = useSelector(
     (state) => state.appReducer.isBudgetButtonEnabled
   );
@@ -113,14 +112,14 @@ const Expense = () => {
   );
 
   const handleBudgetButtonClick = () => {
-    // Handle the budget button click action
     onOpen();
   };
+  
   return (
     <>
-      <Flex mt={10}>
+      <Flex mt={5} px={5}>
         <Button
-          colorScheme="green"
+          colorScheme="whatsapp"
           ms="auto"
           onClick={handleBudgetButtonClick}
           isDisabled={!isBudgetButtonEnabled}

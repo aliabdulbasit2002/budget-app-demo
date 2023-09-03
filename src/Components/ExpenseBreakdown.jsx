@@ -40,7 +40,7 @@ const ExpenseBreakdown = () => {
   return (
     <Stack>
       <Text fontWeight="bold">Expense Breakdown</Text>
-      <Stat rounded="xl" overflow="hidden">
+      <Stat rounded="xl" overflow="hidden" shadow="lg" borderTop="5px solid" borderTopColor="gray.300" bg="gray.300">
         {totalExpense === 0 ? (
           <Flex
             justify="center"
