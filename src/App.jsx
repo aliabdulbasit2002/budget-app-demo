@@ -10,16 +10,17 @@ import { useAuth } from "./Config/firebase";
 
 // Layout
 import RootLayout from "./Layout/RootLayout";
-
-// Pages
+import LoadingIndicator from "./components/LoadingIndicator";
 import Home from "./pages/dashboard/Home";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
 import Expense from "./pages/dashboard/Expense";
 import Budget from "./pages/dashboard/Budget";
-import ErrorPage from "./Pages/ErrorPage";
 import Help from "./pages/Help";
-import LoadingIndicator from "./components/LoadingIndicator";
+import ErrorPage from "./pages/ErrorPage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+
+// Pages
+
 
 const App = () => {
   // Get the current user
