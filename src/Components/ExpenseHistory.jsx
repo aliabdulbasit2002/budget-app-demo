@@ -32,8 +32,8 @@ const ExpenseHistory = () => {
               <Flex
                 fontWeight="bold"
                 color="gray.500"
-                justify="center"
-                gap={{ lg: 5, xl: 16 }}
+                justify="space-between"
+                mx={{base: 2, md: 5, xl:10}}
                 mt={5}
               >
                 <Text>Merchant</Text>

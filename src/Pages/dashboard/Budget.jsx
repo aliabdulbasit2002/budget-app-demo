@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
 import BudgetCard from "../../components/BudgetCard";
 import { nanoid } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addFunction, updateFunction } from "../../slices/appSlices";
 
 const styles = {
@@ -172,6 +172,8 @@ const Budget = () => {
     onClose();
   };
 
+  const searchQuery = useSelector((state)=> state.appReducer.searchQuery);
+
   return (
     <>
       <Flex mt={5} px={5}>
@@ -185,7 +187,7 @@ const Budget = () => {
           Add New Budget
         </Button>
       </Flex> 
-      <BudgetCard onEditBudget={handleEditBudget} />
+      <BudgetCard onEditBudget={handleEditBudget} searchQuery={searchQuery}/>
       <Modal
         isOpen={isOpen}
         onClose={() => {

@@ -111,6 +111,8 @@ const Expense = () => {
     state.appReducer.budget.find((b) => b.id === enabledCardId)
   );
 
+  const searchQuery = useSelector((state)=> state.appReducer.searchQuery);
+
   const handleBudgetButtonClick = () => {
     onOpen();
   };
@@ -127,7 +129,7 @@ const Expense = () => {
           Finance Budget
         </Button>
       </Flex>
-      <ExpenseCard />
+      <ExpenseCard searchQuery={searchQuery}/>
       <Modal
         isOpen={isOpen}
         onClose={() => {

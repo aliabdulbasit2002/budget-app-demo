@@ -10,15 +10,24 @@ import {
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-const BudgetCard = ({onEditBudget}) => {
+const BudgetCard = ({ onEditBudget, searchQuery }) => {
   const state = useSelector((state) => {
     return state.appReducer;
   });
 
+  const filteredBudget = state.budget.filter((budget) =>
+    budget.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
-      <Flex mt={5} gap={5} mx={10}>
-        {state.budget.map((budget) => {
+      <Flex
+        mt={{ base: 10, lg: 5 }}
+        gap={5}
+        mx={10}
+        direction={{ base: "column", lg: "initial" }}
+      >
+        {filteredBudget.map((budget) => {
           const isGreen = budget.finance <= budget.amount;
           return (
             <Card
@@ -32,7 +41,7 @@ const BudgetCard = ({onEditBudget}) => {
                 <Heading size="sm">{budget.name}</Heading>
                 <Flex mt={4} fontSize="sm">
                   <Text>GHS {budget.finance}</Text> {/*finance amount = 100*/}
-                  <Text ms="auto">GHS {budget.amount}</Text>{" "}
+                  <Text ms="auto">GHS {budget.amount}</Text>
                   {/*budget amount = 200*/}
                 </Flex>
                 <Progress
@@ -53,7 +62,7 @@ const BudgetCard = ({onEditBudget}) => {
                     variant="outline"
                     colorScheme="whatsapp"
                     py={3}
-                    onClick={()=> onEditBudget(budget)}
+                    onClick={() => onEditBudget(budget)}
                   >
                     View Details
                   </Button>

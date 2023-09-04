@@ -7,6 +7,7 @@ import {
   CardFooter,
   CardHeader,
   Container,
+  Flex,
   FormControl,
   FormLabel,
   Grid,
@@ -68,7 +69,7 @@ const styles = {
   boxShadow: "none",
 };
 
-function CheckoutForm({closeCheckout, closePricing}) {
+function CheckoutForm({ closeCheckout, closePricing }) {
   const publicKey = "pk_test_94cabd0c9abff32deda8c2bdcc10c41d1faee914";
   const amount = 9.99; // Remember, set in kobo!
   const [email, setEmail] = useState("");
@@ -90,7 +91,6 @@ function CheckoutForm({closeCheckout, closePricing}) {
     }
   }, [userHasPaid, closeCheckout, closePricing]);
 
-
   const componentProps = {
     email,
     amount: amount * 100,
@@ -108,7 +108,7 @@ function CheckoutForm({closeCheckout, closePricing}) {
         status: "success",
         colorScheme: "green",
       });
-      dispatch(updateHasPaid(true));//update user payment status to true
+      dispatch(updateHasPaid(true)); //update user payment status to true
     },
     onClose: () => alert("Wait! Don't leave :("),
   };
@@ -170,7 +170,7 @@ function CheckoutForm({closeCheckout, closePricing}) {
   );
 }
 
-function Pricing({closePricing}) {
+function Pricing({ closePricing }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -206,7 +206,11 @@ function Pricing({closePricing}) {
             </CardBody>
             <CardFooter pt={-5}>
               {pricing.title === "Basic" ? null : (
-                <Button mx="auto" colorScheme="whatsapp" onClick={()=> onOpen()}>
+                <Button
+                  mx="auto"
+                  colorScheme="whatsapp"
+                  onClick={() => onOpen()}
+                >
                   Proceed
                 </Button>
               )}
@@ -222,7 +226,7 @@ function Pricing({closePricing}) {
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <CheckoutForm closeCheckout={onClose} closePricing={closePricing}/>
+            <CheckoutForm closeCheckout={onClose} closePricing={closePricing} />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -233,7 +237,7 @@ function Pricing({closePricing}) {
 const Home = () => {
   const [activeTab, setActiveTab] = useState("Monthly");
 
-  const userHasPaid = useSelector((state)=> state.appReducer.hasPaid);
+  const userHasPaid = useSelector((state) => state.appReducer.hasPaid);
 
   const handleTabChange = (tab) => {
     if (tab === "Weekly") {
@@ -258,12 +262,18 @@ const Home = () => {
 
   return (
     <>
-      <Grid templateColumns="repeat(12,1fr)" px={10} pt={5}>
-        <GridItem colSpan={7} me={10}>
-          <HStack mb={12} gap={10} mt={6} w={{xl: "80%"}}>
+      <Grid templateColumns={{ lg: "repeat(12, 1fr)" }} px={{ base: 3, lg: 10 }} pt={5}>
+        <GridItem colSpan={7} me={{ lg: 10 }} px={{ base: 5, lg: 0 }}>
+          <Flex
+            direction={{ base: "column", lg: "row" }}
+            mb={12}
+            gap={10}
+            mt={6}
+            w={{ xl: "80%" }}
+          >
             <TotalExpence />
             <TotalBudget />
-          </HStack>
+          </Flex>
           <HStack mb={6} gap={5}>
             <Text
               fontWeight="bold"
@@ -289,9 +299,9 @@ const Home = () => {
               Weekly
             </Text>
           </HStack>
-          {renderChart()}
+          <Box mb={{ base: 5, lg: 0 }}>{renderChart()}</Box>
         </GridItem>
-        <GridItem colSpan={5}>
+        <GridItem colSpan={5} display={{ base: "none", lg: "grid" }}>
           <ExpenseBreakdown />
           <ExpenseHistory />
         </GridItem>
@@ -302,7 +312,7 @@ const Home = () => {
           <ModalHeader textAlign="center">Pricing</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Pricing closePricing={onClose}/>
+            <Pricing closePricing={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>
