@@ -70,7 +70,7 @@ const styles = {
 };
 
 function CheckoutForm({ closeCheckout, closePricing }) {
-  const publicKey = "pk_test_94cabd0c9abff32deda8c2bdcc10c41d1faee914";
+  const publicKey = import.meta.env.VITE_PUBLIC_KEY;
   const amount = 9.99; // Remember, set in kobo!
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");

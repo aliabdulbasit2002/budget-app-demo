@@ -23,8 +23,8 @@ import loginImg from "../images/login.jpg";
 
 const Login = () => {
   const [login, setLogin] = useState({
-    email: "test@test.com",
-    password: "123456",
+    email: "test2@email.com",
+    password: "test2@test",
   });
   const { email, password } = login;
   const [error, setError] = useState(false);
@@ -121,7 +121,7 @@ const Login = () => {
           </form>
           <HStack mt={2} align="center">
             <Text as="span" fontSize="sm">
-              Don't have an Account ?
+              {"Don't have an Account ?"}
             </Text>
             <Link
               as={RouterLink}
