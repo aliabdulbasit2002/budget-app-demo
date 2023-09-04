@@ -18,6 +18,7 @@ const initialState = {
   totalBudget: 0,
   totalFinancedBudget: 0,
   hasPaid: false,
+  searchQuery: "",
   //other states...
 };
 
@@ -27,6 +28,11 @@ export const addFinanceData = (payload) => {
     payload,
   };
 };
+
+export const setSearchQuery = (searchQuery) => ({
+  type: 'budgetExpense/setSearchQuery',
+  payload: searchQuery,
+});
 
 const appSlices = createSlice({
   name: "budgetExpense",
@@ -86,6 +92,9 @@ const appSlices = createSlice({
         (total, budget) => total + parseInt(budget.finance),
         0
       );
+    },
+    setSearchQuery: (state, action) => {
+      state.searchQuery = action.payload;
     },
     //   other actions..
   },

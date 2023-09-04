@@ -11,7 +11,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { calculateTotalBudget } from "../../slices/appSlices";
-import { PiPiggyBank } from "react-icons/pi";
+import { PiPiggyBankBold } from "react-icons/pi";
 
 const TotalBudget = () => {
   const state = useSelector((state) => state.appReducer);
@@ -32,7 +32,7 @@ const TotalBudget = () => {
           Total Budget
         </StatLabel>
         <Box ms="auto" bg="whatsapp.500" rounded="full" padding="8px">
-          <PiPiggyBank color="white" fontSize="1.25rem"/>
+          <PiPiggyBankBold color="yellow" fontSize="1.25rem"/>
         </Box>
       </Flex>
       <StatNumber>GHS {state.totalBudget}.00</StatNumber>

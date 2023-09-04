@@ -28,7 +28,7 @@ const TotalExpence = () => {
           Total Expense
         </StatLabel>
         <Box ms="auto" bg="whatsapp.500" rounded="full" padding="8px">
-          <SiExpensify color="white" fontSize="1.25rem"/>
+          <SiExpensify color="yellow" fontSize="1.25rem"/>
         </Box>
       </Flex>
       <StatNumber>GHS {state.totalFinancedBudget}.00</StatNumber>

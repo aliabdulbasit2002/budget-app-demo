@@ -1,7 +1,7 @@
-import { Flex, Icon, Stack, Stat, Text } from "@chakra-ui/react";
+import { Flex, Image, Stack, Stat, Text } from "@chakra-ui/react";
 import Chart from "react-google-charts";
 import { useSelector } from "react-redux";
-import {BiPieChartAlt2} from "react-icons/bi";
+import PieChart from "../assets/Pie chart-amico.svg";
 
 const ExpenseBreakdown = () => {
   const budgetArray = useSelector((state) => state.appReducer.budget);
@@ -52,7 +52,7 @@ const ExpenseBreakdown = () => {
             color="gray.500"
             direction="column"
           >
-            <Icon as={BiPieChartAlt2} boxSize={20} color="whatsapp.500"/>
+            <Image src={PieChart} h={150}/>
             Pie chart data of expenses will show here
           </Flex>
         ) : (
