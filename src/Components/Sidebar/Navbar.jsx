@@ -4,7 +4,6 @@ import {
   Button,
   Drawer,
   DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
@@ -17,6 +16,7 @@ import {
   InputGroup,
   InputRightElement,
   Text,
+  Icon,
 } from "@chakra-ui/react";
 import { AiOutlineHome } from "react-icons/ai";
 import { SiExpensify } from "react-icons/si";
@@ -29,7 +29,11 @@ import { useNavigate } from "react-router-dom";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { FaRegUserCircle } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
+import { BiChevronRight } from "react-icons/bi";
+import { TfiWallet } from "react-icons/tfi";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchQuery } from "../../slices/appSlices";
 
 const navBarItems = [
   {
@@ -58,7 +62,7 @@ function Account() {
   const currentUser = useAuth();
 
   return (
-    <Flex ms="auto" align="center" gap={3}>
+    <Flex ms="auto" align="center" gap={3} display={{base: "none", lg: "inline-flex"}}>
       <FaRegUserCircle fontSize="2.5rem" />
       <Box fontSize="xs">
         <Text>{currentUser?.email}</Text>
@@ -70,7 +74,15 @@ function Account() {
   );
 }
 
-function SearchBar({ handleSearch }) {
+function SearchBar() {
+  const dispatch = useDispatch();
+
+  const handleSearch = (e) => {
+    const searchQuery = e.target.value;
+    console.log(searchQuery);
+    dispatch(setSearchQuery(searchQuery));
+  };
+
   return (
     <InputGroup w="full" ms="auto">
       <InputRightElement pointerEvents="none">
@@ -129,17 +141,22 @@ const Navbar = () => {
           <Button
             ref={btnRef}
             bg="transparent"
-            _hover={{ bg: "#0062ff22" }}
+            _hover={{ bg: "yellow.300", shadow: "lg" }}
             onClick={onOpen}
           >
             <HiMenuAlt3 fontSize="2rem" color="limegreen" />
           </Button>
         </Tooltip>
-        <Flex mx="auto" w="75%" >
-          <Text fontSize="2xl" fontWeight="bold" display={{base: "none", lg: "inline-block"}}>
+        <Flex mx="auto" w="75%">
+          <Text
+            fontSize="3xl"
+            fontWeight="bold"
+            display={{ base: "none", lg: "inline-block" }}
+            color="limegreen"
+          >
             {location.pathname === "/" ? "Dashboard" : routeName}
           </Text>
-          <Flex w="80%" ms="auto">
+          <Flex w={{base: "full", lg: "80%"}} ms="auto">
             <SearchBar />
           </Flex>
         </Flex>
@@ -150,12 +167,39 @@ const Navbar = () => {
         placement="left"
         onClose={onClose}
         finalFocusRef={btnRef}
-        size={{ base: "full", lg: "xs" }}
+        size={{ base: "xs", lg: "xs" }}
       >
         <DrawerOverlay />
-        <DrawerContent bgColor="whatsapp.700" pt={10} px={2}>
-          <DrawerCloseButton color="white" fontSize="xl" mt={14} me={3}/>
-          <DrawerHeader color="yellow.300" fontSize="3xl" fontFamily="cursive">Budget Buddy</DrawerHeader>
+        <DrawerContent
+          bgColor="whatsapp.700"
+          pt={10}
+          px={2}
+          position="relative"
+        >
+          <Icon
+            as={BiChevronRight}
+            bg="yellow.400"
+            color="white"
+            position="absolute"
+            rounded="full"
+            boxSize={10}
+            top="40%"
+            right={-5}
+            onClick={onClose}
+            cursor="pointer"
+            _hover={{ shadow: "dark-lg" }}
+          />
+          <DrawerHeader
+            color="yellow.300"
+            fontSize={"3xl"}
+            fontFamily="cursive"
+            display="inline-flex"
+            alignItems="center"
+            gap={5}
+          >
+            Budget Buddy
+            <Icon as={TfiWallet} shadow="lg"/>
+          </DrawerHeader>
           <DrawerBody mt={10}>
             {navBarItems.map((navBarItem) => (
               <Flex
@@ -168,6 +212,8 @@ const Navbar = () => {
                 _hover={{ backgroundColor: "#ffffff30" }}
                 mt={5}
                 p={2}
+                ps={3}
+                me={5}
                 fontSize="xl"
                 borderRadius={4}
                 transition="all 300ms ease-in-out"

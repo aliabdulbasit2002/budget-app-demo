@@ -4,7 +4,7 @@ import localForage from 'localforage';
 import { persistReducer, persistStore } from 'redux-persist'; // Import persistStore
 
 const persistConfig = {
-  key: 'rootApp',
+  key: 'myApp',
   storage: localForage,
 };
 

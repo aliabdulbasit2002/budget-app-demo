@@ -16,7 +16,7 @@ import {
   enableCard,
 } from "../slices/appSlices";
 
-const ExpenseCard = () => {
+const ExpenseCard = ({ searchQuery }) => {
   const state = useSelector((state) => {
     return state.appReducer;
   });
@@ -34,10 +34,20 @@ const ExpenseCard = () => {
       dispatch(enableBudgetButton());
     }
   };
+
+  const filteredExpenses = state.budget.filter((budget) =>
+    budget.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <>
-      <Flex mt={5} gap={5} mx={10}>
-        {state.budget.map((budget) => {
+      <Flex
+        mt={{ base: 10, lg: 5 }}
+        gap={5}
+        mx={10}
+        direction={{ base: "column", lg: "initial" }}
+      >
+        {filteredExpenses.map((budget) => {
           const isCardEnabled = budget.id === enabledCardId;
 
           return (
