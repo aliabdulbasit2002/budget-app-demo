@@ -23,8 +23,8 @@ import loginImg from "../images/login.jpg";
 
 const Login = () => {
   const [login, setLogin] = useState({
-    email: "test2@email.com",
-    password: "test2@test",
+    email: "",
+    password: "",
   });
   const { email, password } = login;
   const [error, setError] = useState(false);
@@ -94,8 +94,7 @@ const Login = () => {
               <Input
                 type="email"
                 variant="filled"
-                // name="email"
-                value={email}
+                name="email"
                 onChange={handleChange}
               />
             </FormControl>
@@ -105,7 +104,6 @@ const Login = () => {
                 type="password"
                 variant="filled"
                 name="password"
-                value={password}
                 onChange={handleChange}
               />
             </FormControl>
