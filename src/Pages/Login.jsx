@@ -85,7 +85,7 @@ const Login = () => {
           <Heading textAlign="center">Log In</Heading>
           {error && (
             <Text color="red.400" fontWeight="semibold">
-              An Error has Occured
+              An Error has Occurred
             </Text>
           )}
           <form onSubmit={handleSubmit}>
