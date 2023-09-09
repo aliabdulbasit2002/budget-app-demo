@@ -175,11 +175,17 @@ function Pricing({ closePricing }) {
 
   return (
     <>
-      <SimpleGrid spacing={4} templateColumns="repeat(2, 1fr)" p={5} gap={10}>
+      <Flex
+        justify="center"
+        align="center"
+        flexDir={{ base: "column", md: "row" }}
+        gap={10}
+      >
         {pricingData.map((pricing, index) => (
           <Card
             key={index}
-            height="25rem"
+            w="350px"
+            h="350px"
             textAlign="center"
             bg="gray.50"
             shadow="2xl"
@@ -192,7 +198,6 @@ function Pricing({ closePricing }) {
                 <Text
                   key={descIndex}
                   fontSize="sm"
-                  w="80%"
                   mx="auto"
                   color="gray.500"
                   fontStyle="italic"
@@ -217,7 +222,7 @@ function Pricing({ closePricing }) {
             </CardFooter>
           </Card>
         ))}
-      </SimpleGrid>
+      </Flex>
       <Modal isOpen={isOpen} onClose={onClose} size="full">
         <ModalOverlay />
         <ModalContent bg="gray.100" py={10} px={5}>
@@ -262,7 +267,11 @@ const Home = () => {
 
   return (
     <>
-      <Grid templateColumns={{ lg: "repeat(12, 1fr)" }} px={{ base: 3, lg: 10 }} pt={5}>
+      <Grid
+        templateColumns={{ lg: "repeat(12, 1fr)" }}
+        px={{ base: 3, lg: 10 }}
+        pt={5}
+      >
         <GridItem colSpan={7} me={{ lg: 10 }} px={{ base: 5, lg: 0 }}>
           <Flex
             direction={{ base: "column", lg: "row" }}
@@ -308,7 +317,12 @@ const Home = () => {
       </Grid>
       <Modal isOpen={isOpen} onClose={onClose} size="3xl">
         <ModalOverlay />
-        <ModalContent bg="gray.100" py={10} px={5}>
+        <ModalContent
+          bg="gray.100"
+          py={10}
+          px={{ base: 0, md: 5 }}
+          mx={{ base: 4, md: 0 }}
+        >
           <ModalHeader textAlign="center">Pricing</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
